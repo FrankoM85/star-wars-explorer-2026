@@ -1,0 +1,17 @@
+:root {
+  --star-wars-accent: #f5c518;
+  --star-wars-accent-on-light: #795e00;
+  --star-wars-soft-yellow: #F9DF75;
+  --star-wars-accent-border: rgba(245, 197, 24, 0.3);
+  --surface-dark: #1c1c1c;
+  --table-surface: #dddddf;
+  --text-on-active: #181818;
+  --text-on-light: rgba(0, 0, 0, 0.87);
+  --text-muted: #555555;
+  --header-glow-inner: rgba(255, 255, 255, 0.375);
+  --header-glow-outer: rgba(255, 255, 255, 0.225);
+}
+
+body {
+  margin: 0;
+}

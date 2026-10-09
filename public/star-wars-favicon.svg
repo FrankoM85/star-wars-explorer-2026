@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Star Wars Explorer</title>
+  <rect width="64" height="64" rx="12" fill="#080d1a"/>
+  <g fill="#ffd21a" font-family="Arial Black,Arial,sans-serif" font-weight="900" text-anchor="middle">
+    <text x="32" y="43" font-size="29" letter-spacing="-3">SW</text>
+  </g>
+</svg>

@@ -1,0 +1,54 @@
+import { useState } from "react";
+import { Container, Divider, Menu, Segment } from "semantic-ui-react";
+import starWarsLogo from "./assets/star-wars-logo-original.svg";
+import Planets from "./components/Planets/Planets.jsx";
+import People from "./components/People/People.jsx";
+import Starships from "./components/Starships/Starships.jsx";
+import Vehicles from "./components/Vehicles/Vehicles.jsx";
+import Species from "./components/Species/Species.jsx";
+import Films from "./components/Films/Films.jsx";
+import "./App.css";
+
+const categoryComponents = { Planets, People, Starships, Vehicles, Species, Films };
+const categories = Object.keys(categoryComponents);
+
+function App() {
+  const [activeCategory, setActiveCategory] = useState("Planets");
+
+  return (
+    <main className="app">
+      <header className="app-header">
+        <img src={starWarsLogo} alt="Star Wars" className="star-wars-logo" />
+        <h1 className="app-title">GALAXY EXPLORER</h1>
+      </header>
+
+      <Container>
+        <Segment className="app-content">
+          <Menu secondary color="yellow" className="category-menu" aria-label="Categories">
+            {categories.map((category) => (
+              <Menu.Item
+                key={category}
+                as="button"
+                type="button"
+                link
+                name={category}
+                active={activeCategory === category}
+                aria-pressed={activeCategory === category}
+                onClick={() => setActiveCategory(category)}
+              >
+                {category}
+              </Menu.Item>
+            ))}
+          </Menu>
+          <Divider className="category-divider" />
+          {categories.map((category) => {
+            const CategoryComponent = categoryComponents[category];
+            return <CategoryComponent key={category} active={activeCategory === category} />;
+          })}
+        </Segment>
+      </Container>
+    </main>
+  );
+}
+
+export default App;

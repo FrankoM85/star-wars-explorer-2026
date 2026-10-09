@@ -1,0 +1,519 @@
+/* Application layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100dvh;
+  padding-bottom: 24px;
+  background: #080d1a url("./assets/space-background.png") center / cover
+    no-repeat;
+}
+
+.app > .ui.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  width: 90%;
+  max-width: 1500px;
+}
+
+/* Header */
+.app-header {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 80px;
+  margin: 0 0 24px;
+  padding: 8px 24px;
+  background: rgba(25, 28, 36, 0.95);
+  border-bottom: 1px solid var(--star-wars-accent-border);
+  text-align: center;
+}
+
+.star-wars-logo {
+  display: block;
+  width: 115px;
+  flex-shrink: 0;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  filter: drop-shadow(0 0 10px var(--header-glow-inner))
+    drop-shadow(0 0 20px var(--header-glow-outer));
+}
+
+.app-title {
+  min-width: 0;
+  margin: 0;
+  color: var(--star-wars-accent);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: clamp(2px, 0.5vw, 4px);
+  text-shadow: 0 0 10px var(--header-glow-inner),
+    0 0 20px var(--header-glow-outer);
+}
+
+/* Main content */
+.app-content.ui.segment,
+.ui.modal:has(.planet-modal-title) {
+  box-shadow: 0 0 14px rgba(255, 255, 255, var(--container-glow-opacity, 0.07));
+}
+
+.app-content.ui.segment {
+  --container-glow-opacity: 0.16;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  padding: 8px 3em 11px;
+  background-color: #303030;
+  border-color: var(--star-wars-accent-border);
+  border-radius: 12px;
+}
+
+.category-menu.ui.menu,
+.category-divider.ui.divider,
+.planets-toolbar.ui.grid {
+  flex-shrink: 0;
+}
+
+.category-results {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Category menu and shared button states */
+.category-menu.ui.menu {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
+.category-menu.ui.menu .item {
+  border: 0;
+  font: inherit;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.category-menu.ui.menu .item:focus-visible {
+  outline: 2px solid var(--star-wars-soft-yellow);
+  outline-offset: -2px;
+}
+
+.category-menu.ui.menu .item,
+.planets-pagination.ui.menu,
+.planets-pagination.ui.menu .item,
+.planets-pagination.ui.menu .item[aria-disabled="true"]:hover,
+.planets-pagination.ui.menu .item[type="prevItem"]:has(~ .active.item[value="1"]):hover {
+  background: var(--surface-dark);
+  color: var(--star-wars-soft-yellow);
+}
+
+.category-menu.ui.secondary.menu .item:not(.active):not(.disabled):hover,
+.planets-pagination.ui.menu .item:not(.active):not(.disabled):not([aria-disabled="true"]):not([type="prevItem"]:has(~ .active.item[value="1"])):hover,
+.planet-modal-close.ui.icon.button:hover {
+  background: #51492C;
+  color: var(--star-wars-soft-yellow);
+}
+
+.category-menu.ui.secondary.menu .item:not(.active):not(.disabled):hover {
+  box-shadow: inset 0 -2px 0 #D8BE5B;
+}
+
+.category-menu.ui.secondary.menu .active.item,
+.planets-pagination.ui.menu .active.item {
+  background: #E8D06A;
+  color: var(--text-on-active);
+}
+
+/* Semantic UI color rules use !important; keep this override scoped to accents. */
+
+.category-menu.ui.yellow.menu .active.item {
+  color: var(--text-on-active) !important;
+}
+
+.category-divider.ui.divider:not(.vertical):not(.horizontal) {
+  margin: 2px 0;
+  border-top: 3px solid var(--star-wars-accent-border);
+  border-bottom: 0;
+}
+
+/* Category headings and search */
+.category-heading.ui.yellow.header {
+  color: var(--star-wars-soft-yellow) !important;
+}
+
+.category-heading.ui.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 4px 12px;
+  background: var(--surface-dark);
+  border-radius: 8px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.category-heading.ui.header > span {
+  justify-self: center;
+  min-width: 0;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.category-heading.ui.header > .icon:last-child {
+  justify-self: end;
+}
+
+.category-heading.ui.header > .icon {
+  width: 1em;
+  height: 1em;
+  margin: 0;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.planets-search.ui.input > input {
+  background: var(--surface-dark);
+  border-color: var(--star-wars-accent-border);
+  color: var(--star-wars-soft-yellow);
+}
+
+.planets-search.ui.input > input::placeholder {
+  color: #b5b5b5;
+}
+
+.planets-search.ui.input > input:focus {
+  border-color: #D8BE5B;
+  box-shadow: 0 0 0 1px var(--star-wars-accent-border);
+}
+
+.planets-search.ui.input > .icon {
+  color: #D8BE5B;
+}
+
+/* Tables */
+.planets-table-scroll {
+  flex: 1;
+  min-height: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.planets-table.ui.table {
+  min-width: 640px;
+}
+
+.planets-table.ui.table,
+.ui.modal:has(.planet-modal-title) .ui.table {
+  background: var(--table-surface);
+}
+
+.planets-table.ui.table th {
+  position: relative;
+  background: #d4d4d6;
+}
+
+.planets-table.ui.table th > span {
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.planets-table.ui.table td {
+  overflow-wrap: anywhere;
+}
+
+.planets-table.ui.table tbody tr {
+  cursor: pointer;
+}
+
+.planets-table.ui.selectable.table tbody tr:hover {
+  background: #D0CDBF !important;
+  color: var(--text-on-light) !important;
+}
+
+.planets-table.ui.table th > .icon {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  transform: translateY(-50%);
+  width: 1em;
+  height: 1em;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.planets-table.ui.table th > .icon::before {
+  color: #8B7328;
+}
+
+/* Pagination and page count */
+.planets-pagination.ui.menu {
+  margin: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.planets-pagination.ui.menu .item::before {
+  background: var(--star-wars-soft-yellow);
+}
+
+.planets-pagination.ui.menu .item,
+.planets-pagination.ui.menu .active.item {
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 11px;
+  width: 33px;
+  min-width: 33px;
+  padding: 10.21428573px 12.57142854px;
+  justify-content: center;
+}
+
+.planets-pagination.ui.menu .item:is(.active, .disabled, [aria-disabled="true"]),
+.planets-pagination.ui.menu[inert] .item,
+.planets-pagination.ui.menu .item[type="prevItem"]:has(~ .active.item[value="1"]) {
+  cursor: default;
+}
+
+.planets-pagination-space {
+  flex-shrink: 0;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 16px;
+  color: var(--star-wars-soft-yellow);
+}
+
+.planets-pagination.ui.menu.is-placeholder {
+  visibility: hidden;
+}
+
+/* Modals */
+/* Overlay border preserves the modal and its content dimensions. */
+.ui.modal:has(.planet-modal-title)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--star-wars-accent-border);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.ui.modal:has(.planet-modal-title) > .header {
+  background: var(--surface-dark);
+  border-bottom-color: var(--star-wars-accent-border);
+}
+
+.ui.modal:has(.planet-modal-title) > .content {
+  background: #303030;
+}
+
+.planet-modal-title.ui.yellow.header {
+  color: var(--star-wars-soft-yellow) !important;
+}
+
+.planet-modal-close.ui.icon.button {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--surface-dark);
+  border-radius: 4px;
+  background: var(--surface-dark);
+  color: var(--star-wars-soft-yellow);
+}
+
+.planet-modal-close.ui.icon.button:focus-visible {
+  outline: 2px solid var(--star-wars-soft-yellow);
+  outline-offset: 2px;
+}
+
+.ui.modal:has(.planet-modal-title) > .scrolling.content:focus-visible {
+  outline: 2px solid var(--star-wars-soft-yellow);
+  outline-offset: -2px;
+}
+
+.planet-modal-close.ui.icon.button > .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 1;
+}
+
+/* Responsive layout */
+@media (max-width: 767px) {
+  .app-content.ui.segment {
+    padding-inline: 16px;
+  }
+
+  .app-content .category-menu.ui.menu {
+    justify-content: center;
+    gap: 8px;
+    margin-inline: 0;
+  }
+
+  .app-content .category-menu.ui.menu .item {
+    margin: 0;
+  }
+
+  .app-content .category-heading.ui.header,
+  .app-content .planets-search.ui.input {
+    width: calc(100% + 28px);
+    max-width: none;
+    margin-inline: -14px;
+  }
+
+  .app-content .planets-table-scroll,
+  .app-content .planets-pagination-space {
+    display: none;
+  }
+
+  .mobile-category-list {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: 1px;
+  }
+
+  .mobile-category-cards {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mobile-category-card,
+  .mobile-list-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    height: 52px;
+    padding: 0 14px;
+    border: 1px solid var(--star-wars-accent-border);
+    border-radius: 4px;
+    background: var(--surface-dark);
+    color: var(--star-wars-soft-yellow);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .mobile-category-card > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-category-card > .icon {
+    flex-shrink: 0;
+    margin: 0;
+    opacity: 0.7;
+  }
+
+  .mobile-list-action {
+    justify-content: center;
+    height: 44px;
+    margin-top: 12px;
+    font-weight: 600;
+  }
+
+  .mobile-back-to-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 32px;
+    margin: 12px auto 0;
+    padding: 0;
+  }
+
+  .mobile-back-to-top > .icon {
+    width: 1em;
+    height: 1em;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .mobile-category-card:hover,
+  .mobile-category-card:active,
+  .mobile-list-action:hover,
+  .mobile-list-action:active {
+    background: #51492C;
+    box-shadow: inset 0 -2px 0 #D8BE5B;
+  }
+
+  .mobile-category-card:focus-visible,
+  .mobile-list-action:focus-visible {
+    outline: 2px solid var(--star-wars-soft-yellow);
+    outline-offset: -3px;
+  }
+
+  .mobile-list-status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+/* Keep a usable list viewport on short mobile screens. */
+@media (max-width: 767px) and (max-height: 500px) {
+  .app {
+    height: auto;
+  }
+
+  .mobile-category-list {
+    flex: none;
+    height: 224px;
+  }
+}
+
+@media (max-width: 700px) {
+  .app-header {
+    gap: 16px;
+  }
+
+  .app-title {
+    max-width: 100%;
+    font-size: 28px;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (min-width: 768px) {
+  .planets-toolbar.ui.grid > .column:first-child {
+    padding-right: 0;
+  }
+}
