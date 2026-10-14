@@ -1,30 +1,42 @@
 import { useState } from "react";
 import { Container, Divider, Menu, Segment } from "semantic-ui-react";
 import starWarsLogo from "./assets/star-wars-logo-original.svg";
-import Planets from "./components/Planets/Planets.jsx";
-import People from "./components/People/People.jsx";
-import Starships from "./components/Starships/Starships.jsx";
-import Vehicles from "./components/Vehicles/Vehicles.jsx";
-import Species from "./components/Species/Species.jsx";
-import Films from "./components/Films/Films.jsx";
-import "./App.css";
+import Planets from "./components/planets/Planets.jsx";
+import People from "./components/people/People.jsx";
+import Starships from "./components/starships/Starships.jsx";
+import Vehicles from "./components/vehicles/Vehicles.jsx";
+import Species from "./components/species/Species.jsx";
+import Films from "./components/films/Films.jsx";
+import "./app.css";
 
-const categoryComponents = { Planets, People, Starships, Vehicles, Species, Films };
+const categoryComponents = {
+  Planets,
+  People,
+  Starships,
+  Vehicles,
+  Species,
+  Films,
+};
 const categories = Object.keys(categoryComponents);
 
 function App() {
   const [activeCategory, setActiveCategory] = useState("Planets");
 
   return (
-    <main className="app">
+    <div className="app">
       <header className="app-header">
         <img src={starWarsLogo} alt="Star Wars" className="star-wars-logo" />
         <h1 className="app-title">GALAXY EXPLORER</h1>
       </header>
 
-      <Container>
+      <Container as="main">
         <Segment className="app-content">
-          <Menu secondary color="yellow" className="category-menu" aria-label="Categories">
+          <Menu
+            secondary
+            color="yellow"
+            className="category-menu"
+            aria-label="Categories"
+          >
             {categories.map((category) => (
               <Menu.Item
                 key={category}
@@ -43,11 +55,29 @@ function App() {
           <Divider className="category-divider" />
           {categories.map((category) => {
             const CategoryComponent = categoryComponents[category];
-            return <CategoryComponent key={category} active={activeCategory === category} />;
+            return (
+              <CategoryComponent
+                key={category}
+                active={activeCategory === category}
+              />
+            );
           })}
         </Segment>
       </Container>
-    </main>
+      <footer className="app-footer">
+        <span>© 2026 Frank</span>
+        <span>
+          Data provided by{" "}
+          <a
+            href="https://swapi.dev/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            SWAPI
+          </a>
+        </span>
+      </footer>
+    </div>
   );
 }
 

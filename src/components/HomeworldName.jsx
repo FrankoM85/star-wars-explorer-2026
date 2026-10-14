@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { formatValue } from "./categoryFormatting.js";
+import { fetchRelatedEntity } from "../api/fetch.js";
 
 // Share both completed names and in-flight requests between all modals.
 const planetNames = new Map();
 
 function loadPlanetName(url) {
   if (!planetNames.has(url)) {
-    const request = fetch(url)
-      .then((response) => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-      })
-      .then((planet) => typeof planet?.name === "string" ? formatValue(planet.name) : "N/A")
+    const request = fetchRelatedEntity(url, "planets")
+      .then((planet) =>
+        typeof planet?.name === "string" ? formatValue(planet.name) : "N/A",
+      )
       .catch(() => {
         // Allow a later modal opening to retry a failed request.
         planetNames.delete(url);
@@ -23,7 +22,8 @@ function loadPlanetName(url) {
 }
 
 function HomeworldName({ url }) {
-  const planetUrl = typeof url === "string" && formatValue(url) !== "N/A" ? url.trim() : null;
+  const planetUrl =
+    typeof url === "string" && formatValue(url) !== "N/A" ? url.trim() : null;
   const [result, setResult] = useState(null);
 
   useEffect(() => {

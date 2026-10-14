@@ -9,25 +9,39 @@ function MobileCategoryList({ name, items, nameField, onOpen }) {
   function updateScroll() {
     const list = listRef.current;
     if (!list) return;
-    setShowBackToTop(list.scrollHeight > list.clientHeight && list.scrollTop > 0);
+    setShowBackToTop(window.scrollY > 0);
   }
 
   useEffect(() => {
     const observer = new ResizeObserver(updateScroll);
     observer.observe(listRef.current);
     observer.observe(listRef.current.querySelector("ul"));
-    return () => observer.disconnect();
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    updateScroll();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", updateScroll);
+    };
   }, []);
 
   function backToTop() {
-    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches
+      ? "auto"
+      : "smooth";
     listRef.current.scrollTo({ top: 0, behavior });
     window.scrollTo({ top: 0, behavior });
     listRef.current.querySelector("button")?.focus({ preventScroll: true });
   }
 
   return (
-    <div ref={listRef} className="mobile-category-list" role="region" aria-label={`${name} list`} onScroll={updateScroll}>
+    <div
+      ref={listRef}
+      className="mobile-category-list"
+      role="region"
+      aria-label={`${name} list`}
+      onScroll={updateScroll}
+    >
       <ul className="mobile-category-cards">
         {items.map((item, index) => (
           <li key={item.url ?? index}>
@@ -48,7 +62,12 @@ function MobileCategoryList({ name, items, nameField, onOpen }) {
         {items.length} találat
       </span>
       {showBackToTop && (
-        <button type="button" className="mobile-list-action mobile-back-to-top" aria-label="Ugrás a tetejére" onClick={backToTop}>
+        <button
+          type="button"
+          className="mobile-list-action mobile-back-to-top"
+          aria-label="Ugrás a tetejére"
+          onClick={backToTop}
+        >
           <Icon name="arrow up" aria-hidden="true" />
         </button>
       )}
