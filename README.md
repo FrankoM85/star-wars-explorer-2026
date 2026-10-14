@@ -14,7 +14,15 @@ My goal was to preserve the original learning experience while turning the proje
 
 ## Preview
 
-**Screenshots coming soon.**
+<a href="screenshots/desktop_main.webp">
+  <img src="screenshots/desktop_main.webp" alt="Star Wars Galaxy Explorer - Desktop View" width="260">
+</a>
+<a href="screenshots/desktop-modal.webp">
+  <img src="screenshots/desktop-modal.webp" alt="Star Wars Galaxy Explorer - Detail Modal" width="260">
+</a>
+<a href="screenshots/mobile-main.webp">
+  <img src="screenshots/mobile-main.webp" alt="Star Wars Galaxy Explorer - Mobile View" width="140">
+</a>
 
 ## Features
 
